@@ -1,22 +1,13 @@
-terraform {
-  required_version = "~> 1.5.5"
-
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.12.0"
-    }
-  }
+module "network" {
+  source          = "./network"
+  access_ip       = var.access_ip
+  vpc_cidr        = local.vpc_cidr
+  security_groups = local.security_groups
 }
 
-provider "aws" {
-  shared_credentials_file = "~/.aws/credentials"
-  region                  = "sa-east-1"
-
-  default_tags {
-    tags = {
-      owner      = "hawllysson"
-      managed-by = "terraform"
-    }
-  }
+module "ec2" {
+  source                = "./ec2"
+  public_security_group = module.network.public_security_group
+  public_subnet         = module.network.public_subnet
+  internet_gateway      = module.network.internet_gateway_id
 }
