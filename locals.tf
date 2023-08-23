@@ -34,6 +34,13 @@ locals {
           cidr_blocks = [var.access_ip]
         }
 
+        nifi_registry_port = {
+          from        = 18080
+          to          = 18080
+          protocol    = "tcp"
+          cidr_blocks = [var.access_ip]
+        }
+
         nifi_web_port = {
           from        = 8080
           to          = 8080
@@ -52,15 +59,9 @@ locals {
           protocol    = "tcp"
           cidr_blocks = [var.access_ip]
         }
-        nifi_data_input_port = {
+        nifi_jvm_debugger_port = {
           from        = 8000
           to          = 8000
-          protocol    = "tcp"
-          cidr_blocks = [var.access_ip]
-        }
-        nifi_additional_port = {
-          from        = 8181
-          to          = 8181
           protocol    = "tcp"
           cidr_blocks = [var.access_ip]
         }
